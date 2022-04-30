@@ -5,7 +5,7 @@ import {useState} from 'react'
 function App() {
 
   const [descriptions, setDescriptions] = useState([])
-  const counter = 0;
+  let counter = 0; //change me when re-run for not overriding
 
   const addDescription = (json) => {
     const current = descriptions;
