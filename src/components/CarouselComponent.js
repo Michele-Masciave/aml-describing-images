@@ -3,7 +3,7 @@ import ArtPainting from '../images/art_painting_images.json'
 import Cartoon from '../images/cartoon_images.json'
 import Photo from '../images/photo_images.json'
 import Sketches from '../images/sketch_images.json'
-import {Image, Carousel, Container, Row, Col, Button, Form} from 'react-bootstrap'
+import {Image, Carousel, Container, Row, Col, Button, Form, Alert, Badge, Accordion} from 'react-bootstrap'
 import {useState} from 'react'
 
 export default function CarouselCompoent(props) {
@@ -17,16 +17,6 @@ export default function CarouselCompoent(props) {
     const Texture = ['no texture', 'painting texture', 'spiral texture', 'round texture'];
     const Perspective = ['realistic', 'semi realistic', 'unrealistic'];
 
-    function Mymsg(msg,duration) {
-        var alt = document.createElement("div");
-        alt.setAttribute("style","position:absolute;top:50%;left:50%;background-color:green;color:white");
-        alt.innerHTML = msg;
-        setTimeout(function(){
-        alt.parentNode.removeChild(alt);
-        },duration);
-        document.body.appendChild(alt);
-    }
-
     const [details, setDetails] = useState([])
     const [edges, setEdges] = useState([])
     const [saturation, setSaturation] = useState([])
@@ -36,6 +26,31 @@ export default function CarouselCompoent(props) {
     const [text, setText] = useState([])
     const [texture, setTexture] = useState([])
     const [perspective, setPerspective] = useState([])
+
+    const [alert, setAlert] = useState(false)
+    const [index, setIndex] = useState(0);
+    const [domain, setDomain] = useState(ArtPainting);
+    const [start, setStart] = useState(0);
+    const [end, setEnd] = useState(ArtPainting.length-1);
+
+    const resetFeatures = () => {
+        //reset
+        setDetails([])
+        setEdges([])
+        setShades([])
+        setSaturation([])
+        setBackground([])
+        setInstances([])
+        setText([])
+        setTexture([])
+        setPerspective([])
+    }
+
+    const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+        //reset
+        resetFeatures();
+    };
 
     const handleDetails = (label) => {
         setDetails([label])
@@ -70,7 +85,11 @@ export default function CarouselCompoent(props) {
     }
 
     const handleText = (label) => {
-        setText([label])
+        const current_text = text;
+        if(!text.includes(label) && label !== "")
+            setText([...current_text, label])
+        else
+            setEdges(current_text.filter(e => e !== label))
     }
 
     const handleTexture = (label) => {
@@ -86,35 +105,56 @@ export default function CarouselCompoent(props) {
     }
 
     const onSubmit = (img_name) => {
-    let currentImage = {
-            image_name: img_name,
-            details: details.join(", "),
-            edges: edges.join(", "),
-            color_saturation: saturation.join(", "),
-            color_shades: shades.join(", "),
-            background: background.join(", "),
-            single_instance: instances.join(", "),
-            text: text.join(", "),
-            texture: texture.join(", "),
-            perspective: perspective.join(", "),
+        if (details.length > 0 && edges.length > 0 && saturation.length > 0 && shades.length > 0 && background.length > 0 && instances.length > 0 && text.length > 0 && texture.length > 0 && perspective.length > 0) {
+            let currentImage = {
+                image_name: img_name,
+                details: details.join(", "),
+                edges: edges.join(", "),
+                color_saturation: saturation.join(", "),
+                color_shades: shades.join(", "),
+                background: background.join(", "),
+                single_instance: instances.join(", "),
+                text: text.join(", "),
+                texture: texture.join(", "),
+                perspective: perspective.join(", "),
+            }
+            props.addDescription(currentImage)
+            setAlert(true)
+            setTimeout(() => setAlert(false), 5000);
+        } else {
+            window.alert('Fill all fields!')
         }
-        props.addDescription(currentImage)
-        Mymsg('Description added with success', 3000)
     }
 
 
     return (
         <>
-        <Carousel variant="light" indicators={false} interval={null} style={{width: '100%'}}>{
-            ArtPainting. //change me to the domain
-            slice(2,4). //change with the range (NB: count starts from 0)
-            map((image, index) => {
+        <br></br>
+        <br></br>
+        <Container>
+            <Form.Check defaultChecked type="radio" label="ArtPainting" name="group00" inline onChange={()=>{setDomain(ArtPainting); setStart(0); setEnd(ArtPainting.length-1)}} />
+            <Form.Check type="radio" label="Cartoon" name="group00" inline onChange={()=>{setDomain(Cartoon); setStart(0); setEnd(Cartoon.length-1)}}  />
+            <Form.Check type="radio" label="Photo" name="group00" inline onChange={()=>{ setDomain(Photo); setStart(0); setEnd(Photo.length-1)}}  />
+            <Form.Check type="radio" label="Sketches" name="group00" inline onChange={()=>{ setDomain(Sketches); setStart(0); setEnd(Sketches.length-1)}}  />
+            <div style={{display: 'inline-block'}}>
+                <Form.Control defaultValue={0} size="sm" placeholder="from" className="App-number" onChange={(e) => setStart(e.target.value)}/>
+            </div>
+            {' '}
+            <div style={{display: 'inline-block'}}>
+                <Form.Control defaultValue={domain.length} size="sm" placeholder="to" className="App-number" onChange={(e) => setEnd(e.target.value)}/>
+            </div>
+        </Container>
+        <br></br>
+        <br></br>
+        <Carousel variant="light" indicators={false} interval={null} style={{width: '100%'}} activeIndex={index} onSelect={handleSelect}>{
+            domain.slice(start,end).map((image, index) => {
                 return (
                     <Carousel.Item key={index}>
                         <Container className='App-container'>
                             <Row>
                                 <Col xs={3}>
-                                    <Image className="App-photo" src={`./PACS/kfold/${image.image_name}`} alt="" />
+                                    <Image className="App-photo" src={`./PACS/kfold/${image.image_name}`} alt={image.image_name} />
+                                    <small>{image.image_name}</small>
                                 </Col>
                                 <Col xs={3}>
                                     <h5>details</h5>
@@ -256,9 +296,10 @@ export default function CarouselCompoent(props) {
                             </Row>
                             <Row>
                                 <Col xs={6}></Col>
-                                <Col xs={4}></Col>
+                                <Col xs={2}></Col>
                                 <Col xs={2}>
                                     <Button size={'md'} variant={'outline-light'} onClick={() => onSubmit(image.image_name)}>Confirm</Button>
+                                    <Button size={'md'} variant={'outline-danger'} style={{marginLeft: 30}} onClick={() => resetFeatures()}>Reset</Button>
                                 </Col>
                             </Row>
                         </Container>
@@ -267,10 +308,57 @@ export default function CarouselCompoent(props) {
             })
         }</Carousel>
         <br></br>
+        {alert ? <Alert variant='success'>Description added with success.</Alert> : <></>}
         <br></br>
         <br></br>
+        <Container>
+            <small>{'details: '}</small>
+            {details.map(e => <Badge pill bg="primary">{e}</Badge>)}
+            <br></br>
+            <small>{'edges: '}</small>
+            {edges.map(e => <Badge pill bg="secondary">{e}</Badge>)}
+            <br></br>
+            <small>{'saturation: '}</small>
+            {saturation.map(e => <Badge pill bg="success">{e}</Badge>)}
+            <br></br>
+            <small>{'shades: '}</small>
+            {shades.map(e => <Badge pill bg="danger">{e}</Badge>)}
+            <br></br>
+            <small>{'background: '}</small>
+            {background.map(e => <Badge pill bg="warning" text="dark">{e}</Badge>)}
+            <br></br>
+            <small>{'instances: '}</small>
+            {instances.map(e => <Badge pill bg="info">{e}</Badge>)}
+            <br></br>
+            <small>{'text: '}</small>
+            {text.map(e => <Badge pill bg="light" text="dark">{e}</Badge>)}
+            <br></br>
+            <small>{'texture: '}</small>
+            {texture.map(e => <Badge pill bg="dark">{e}</Badge>)}
+            <br></br>
+            <small>{'perspective: '}</small>
+            {perspective.map(e => <Badge pill bg="primary">{e}</Badge>)}
+        </Container>
         <br></br>
         <Button size={'lg'} variant={'danger'} onClick={() => props.writeDescriptions()}>Save</Button>
+        <br></br>
+        <br></br>
+        <Container className="App-resume">
+            <h5 style={{color: 'white'}}>Descriptions:</h5>
+            <Accordion>
+                {props.desc.map((d,index) =>
+                    <>
+                        <Accordion.Item eventKey={index}>
+                            <Accordion.Header>{d.image_name}</Accordion.Header>
+                            <Accordion.Body>
+                                {JSON.stringify(d)}
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </>
+                )}
+            </Accordion>
+        </Container>
+        <br></br>
         </>
     );
 }

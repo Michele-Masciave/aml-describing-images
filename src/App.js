@@ -9,7 +9,7 @@ function App() {
 
   const addDescription = (json) => {
     const current = descriptions;
-    setDescriptions([...current, json])
+      setDescriptions([...current, json])
   }
 
   const writeDescriptions = () => {
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="App-header">
-      <CarouselCompoent addDescription={addDescription} writeDescriptions={writeDescriptions}/>
+      <CarouselCompoent desc={descriptions} addDescription={addDescription} writeDescriptions={writeDescriptions}/>
     </div>
   );
 }

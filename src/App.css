@@ -28,3 +28,14 @@
   width: 200px;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
+
+.App-number {
+  width: 150px;
+}
+
+.App-resume {
+  margin-left: 30;
+  color: #282c34;
+  box-shadow: 0 10px 14px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 50%;
+}
