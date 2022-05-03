@@ -162,7 +162,7 @@ export default function CarouselCompoent(props) {
                                         {Details.map(el => {
                                         return(
                                             <Form.Check
-                                            name="group1"
+                                            name={"group1"+index}
                                             type='radio'
                                             label={el}
                                             id={el}
@@ -176,7 +176,7 @@ export default function CarouselCompoent(props) {
                                         {Edges.map(el => {
                                         return(
                                             <Form.Check
-                                            name="group2"
+                                            name={"group2"+index}
                                             type='checkbox'
                                             label={el}
                                             id={el}
@@ -190,7 +190,7 @@ export default function CarouselCompoent(props) {
                                         {Saturation.map(el => {
                                         return(
                                             <Form.Check
-                                            name="group3"
+                                            name={"group3"+index}
                                             type='radio'
                                             label={el}
                                             id={el}
@@ -205,15 +205,15 @@ export default function CarouselCompoent(props) {
                                     {Shades.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group4"
+                                        name={"group4"+index}
                                         type='radio'
                                         label={el}
                                         id={el}
                                         onChange={(e) => handleShades(e.target.id)}
                                     />
                                     )})}
-                                    <Form.Control defaultValue={""} id="custom_shade" name="group4" size="sm" placeholder="[color]scale shades"/>
-                                    <Button size='sm' variant={'outline-warning'} onClick={() => handleShades(document.getElementById("custom_shade").value)}>Add</Button>
+                                    <Form.Control defaultValue={""} id={"custom_shade"+index} name={"group4"+index} size="sm" placeholder="[color]scale shades"/>
+                                    <Button size='sm' variant={'outline-warning'} onClick={() => handleShades(document.getElementById("custom_shade"+index).value)}>Add</Button>
                                     </Form> 
                                     <hr style={{backgroundColor: 'transparent'}}></hr>     
                                     <h5>background</h5>
@@ -221,15 +221,15 @@ export default function CarouselCompoent(props) {
                                     {Background.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group5"
+                                        name={"group5"+index}
                                         type='checkbox'
                                         label={el}
                                         id={el}
                                         onChange={(e) => handleBackground(e.target.id)}
                                     />
                                     )})}
-                                    <Form.Control name="group5" id="custom_background" size="sm" placeholder="[color] background" />
-                                    <Button size='sm' variant={'outline-warning'} onClick={(e) => handleBackground(document.getElementById("custom_background").value)}>Add</Button>
+                                    <Form.Control name={"group5"+index} id={"custom_background"+index} size="sm" placeholder="[color] background" />
+                                    <Button size='sm' variant={'outline-warning'} onClick={(e) => handleBackground(document.getElementById("custom_background"+index).value)}>Add</Button>
                                     </Form>  
                                     <hr style={{backgroundColor: 'transparent'}}></hr>     
                                     <h5>single instance</h5>
@@ -237,7 +237,7 @@ export default function CarouselCompoent(props) {
                                     {Instance.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group6"
+                                        name={"group6"+index}
                                         type='radio'
                                         label={el}
                                         id={el}
@@ -245,15 +245,15 @@ export default function CarouselCompoent(props) {
                                     />
                                     )})}
                                     </Form>
-                                    <Form.Control defaultValue={""} id="custom_instances" name="group6" size="sm" placeholder="[num] instances" />
-                                    <Button size='sm' variant={'outline-warning'} onClick={() => handleInstances(document.getElementById("custom_instances").value)}>Add</Button>
+                                    <Form.Control defaultValue={""} id={"custom_instances"+index} name={"group6"+index} size="sm" placeholder="[num] instances" />
+                                    <Button size='sm' variant={'outline-warning'} onClick={() => handleInstances(document.getElementById("custom_instances"+index).value)}>Add</Button>
                                     <hr style={{backgroundColor: 'transparent'}}></hr>     
                                     <h5>text</h5>
                                     <Form>
                                     {Text.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group7"
+                                        name={"group7"+index}
                                         type='checkbox'
                                         label={el}
                                         id={el}
@@ -268,15 +268,15 @@ export default function CarouselCompoent(props) {
                                     {Texture.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group8"
+                                        name={"group8"+index}
                                         type='checkbox'
                                         label={el}
                                         id={el}
                                         onChange={(e) => handleTexture(e.target.id)}
                                     />
                                     )})}
-                                    <Form.Control name="group8" id="custom_texture" size="sm" placeholder="[pattern] pattern" />
-                                    <Button size='sm' variant={'outline-warning'} onClick={(e) => handleTexture(document.getElementById("custom_texture").value)}>Add</Button>
+                                    <Form.Control name={"group8"+index} id={"custom_texture"+index} size="sm" placeholder="[pattern] pattern" />
+                                    <Button size='sm' variant={'outline-warning'} onClick={(e) => handleTexture(document.getElementById("custom_texture"+index).value)}>Add</Button>
                                     </Form> 
                                     <hr style={{backgroundColor: 'transparent'}}></hr>     
                                     <h5>prespective</h5>
@@ -284,7 +284,7 @@ export default function CarouselCompoent(props) {
                                     {Perspective.map(el => {
                                     return(
                                         <Form.Check
-                                        name="group9"
+                                        name={"group9"+index}
                                         type='radio'
                                         label={el}
                                         id={el}
