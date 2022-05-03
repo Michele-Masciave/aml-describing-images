@@ -155,6 +155,7 @@ export default function CarouselCompoent(props) {
                                 <Col xs={3}>
                                     <Image className="App-photo" src={`./PACS/kfold/${image.image_name}`} alt={image.image_name} />
                                     <small>{image.image_name}</small>
+                                    <p>image index: {index}</p>
                                 </Col>
                                 <Col xs={3}>
                                     <h5>details</h5>
@@ -340,7 +341,7 @@ export default function CarouselCompoent(props) {
             {perspective.map(e => <Badge pill bg="primary">{e}</Badge>)}
         </Container>
         <br></br>
-        <Button size={'lg'} variant={'danger'} onClick={() => props.writeDescriptions()}>Save</Button>
+        <Button size={'lg'} variant={'danger'} onClick={() => props.writeDescriptions(start, index)}>Save</Button>
         <br></br>
         <br></br>
         <Container className="App-resume">

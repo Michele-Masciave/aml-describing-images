@@ -5,14 +5,14 @@ import {useState} from 'react'
 function App() {
 
   const [descriptions, setDescriptions] = useState([])
-  let counter = 0; //change me when re-run for not overriding
 
   const addDescription = (json) => {
     const current = descriptions;
       setDescriptions([...current, json])
   }
 
-  const writeDescriptions = () => {
+  const writeDescriptions = (start, index) => {
+    const end = parseInt(start)+parseInt(index)-1
     console.log("length: ", descriptions.length)
     const jsonString = JSON.stringify(descriptions);
     console.log(jsonString)
@@ -21,10 +21,9 @@ function App() {
       type: "text/plain"
     });
     element.href = URL.createObjectURL(file);
-    element.download = "descriptions_"+counter+".json";
+    element.download = "descriptions_"+start+"_"+end+".json";
     document.body.appendChild(element);
     element.click();
-    counter += 1
   }
 
   return (
