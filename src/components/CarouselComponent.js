@@ -89,7 +89,7 @@ export default function CarouselCompoent(props) {
         if(!text.includes(label) && label !== "")
             setText([...current_text, label])
         else
-            setEdges(current_text.filter(e => e !== label))
+            setText(current_text.filter(e => e !== label))
     }
 
     const handleTexture = (label) => {
